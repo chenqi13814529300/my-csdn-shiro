@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycsdnshiro.mycsdnshiro.mapper.UserTokenMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mycsdnshiro.mycsdnshiro.entity.UserToken">
+        <id column="user_id" property="userId"/>
+        <result column="token" property="token"/>
+        <result column="expire_time" property="expireTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="findByToken" resultMap="BaseResultMap">
+        select
+            user_id,token,expire_time,update_time
+        from
+            user_token
+        where token=#{token}
+    </select>
+
+    <select id="findByUserId" resultMap="BaseResultMap">
+        select
+            user_id,token,expire_time,update_time
+        from
+            user_token
+        where user_id=#{userId}
+    </select>
+
+    <insert id="insertUserToken">
+        insert into user_token
+            (user_id,token,update_time,expire_time)
+        values(#{userId},#{token},#{updateTime},#{expireTime})
+    </insert>
+
+    <update id="updateUserToken">
+        UPDATE user_token
+        set expire_time=#{expireTime},
+            token=#{token},
+            update_time=#{updateTime}
+        where user_id=#{userId};
+    </update>
+
+
+
+</mapper>
